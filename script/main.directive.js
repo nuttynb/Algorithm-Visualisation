@@ -21,6 +21,10 @@
                 templateUrl: "view/sorting.html",
                 controller: "sorting"
             })
+            .when("/tree", {
+                templateUrl: "view/tree.html",
+                controller: "tree"
+            })
             .otherwise({
                 redirectTo: "/sorting"
             })
