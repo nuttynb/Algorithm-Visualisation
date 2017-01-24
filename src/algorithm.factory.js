@@ -1,6 +1,6 @@
 (function () {
     angular
-        .module('algViz.main', [])
+        .module('algViz.main')
         .factory('algorithmFactory', algorithmFactory);
     
     function algorithmFactory() {

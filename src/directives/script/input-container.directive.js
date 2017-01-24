@@ -1,18 +1,15 @@
 (function () {
     angular
-        .module('algViz.main', [])
-        .directive('sortingRectangles', Directive);
+        .module('algViz.main')
+        .directive('inputContainer', Directive);
 
     function Directive() {
         return {
             bindToController: true,
-            scope: {
-                values: '&'
-            },
             controller,
-            controllerAs: 'sorting',
+            controllerAs: 'basicInputs',
             restrict: 'E',
-            templateUrl: 'view/sorting-rectangles.html'
+            templateUrl: 'view/input-container.html'
         };
     }
 
