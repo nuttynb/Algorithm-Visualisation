@@ -7,20 +7,17 @@
         return {
             bindToController: true,
             scope: {
-                alorithms: '=',
+                algorithms: '=',
+                searchString: '=',
                 selectedType: '='
             },
             controller,
             controllerAs: 'container',
             restrict: 'E',
-            template: template
+            templateUrl: 'src/directives/templates/algorithm-container.html'
         };
-    }
 
-    let template = `
-            <div>
-            </div>
-            `;
+    }
 
     function controller($log) {
         const vm = this;

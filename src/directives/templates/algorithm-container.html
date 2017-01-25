@@ -1,0 +1,15 @@
+<div class="container">
+    <div id="algorithmListWrapper">
+        <ul class="list-unstyled">
+            <li class="algorithm" ng-repeat="algorithm in alorithms | filter:searchString">
+                <div class="book-details clearfix">
+                    <h3>{{algorithm.name}}</h3>
+                    <ul class="list-unstyled list-inline">
+                        <li>Type: {{algorithm.type}}</li>
+                        <li>Description: {{algorithm.description | uppercase}}</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -22,23 +22,23 @@
     margin-top: 15px;
 }
 
-#bookListWrapper {
+#algorithmListWrapper {
 	width: 100%;
 	padding: 10px;
 }
 
-#bookListWrapper input {
+#algorithmListWrapper input {
 	width: 25%;
 }
 
-#bookListWrapper .book {
+#algorithmListWrapper .algorithm {
 	border: 1px solid gray;
 	padding: 10px;
 	margin-bottom: 10px;	
 	position: relative;
 }
 
-#bookListWrapper .book .book-details {
+#bookListWrapper .algorithm .algorithm-details {
 	margin-left: 160px;
 }
 
@@ -54,7 +54,7 @@
 	 opacity:1;
 }
 
-.book.ng-leave {
+.algorithm.ng-leave {
 	-webkit-transition:0.5s linear all;
 	 -moz-transition:0.5s linear all;
 	 -o-transition:0.5s linear all;
@@ -63,12 +63,12 @@
 	 left: 0;
 }
 
-.book.ng-leave-active {
+.algorithm.ng-leave-active {
 	opacity:0;
 	left: 600px;
 }
 
-.book.ng-enter {
+.algorithm.ng-enter {
 	-webkit-transition:0.5s linear all;
 	 -moz-transition:0.5s linear all;
 	 -o-transition:0.5s linear all;
@@ -77,7 +77,7 @@
 	 left: 600px;
 }
 
-.book.ng-enter-active {
+.algorithm.ng-enter-active {
 	opacity:1;
 	left: 0;
 }
