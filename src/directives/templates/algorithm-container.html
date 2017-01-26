@@ -1,12 +1,20 @@
 <div class="container">
+    <form role="form">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search everywhere..."
+                   ng-model="algorithmContainer.searchString"
+                   ng-click="algorithmContainer.onTextClick($event)">
+        </div>
+    </form>
     <div id="algorithmListWrapper">
         <ul class="list-unstyled">
-            <li class="algorithm" ng-repeat="algorithm in alorithms | filter:searchString">
-                <div class="book-details clearfix">
+            <li class="algorithm btn btn-default"
+                ng-repeat="algorithm in algorithmContainer.algorithms | algorithmFilterByType : algorithmContainer.type : algorithmContainer.searchString | filter : algorithmContainer.searchString">
+                <div class="clearfix">
                     <h3>{{algorithm.name}}</h3>
                     <ul class="list-unstyled list-inline">
-                        <li>Type: {{algorithm.type}}</li>
-                        <li>Description: {{algorithm.description | uppercase}}</li>
+                        <li>Type: {{algorithm.type | uppercase}}</li>
+                        <li>Description: {{algorithm.description}}</li>
                     </ul>
                 </div>
             </li>

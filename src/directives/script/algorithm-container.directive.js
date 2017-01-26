@@ -1,26 +1,61 @@
 (function () {
     angular
         .module('algViz.main')
-        .directive('algorithmContainer', Directive);
+        .directive('algorithmContainer', Directive)
+        .filter('algorithmFilterByType', filter);
 
     function Directive() {
         return {
             bindToController: true,
             scope: {
                 algorithms: '=',
-                searchString: '=',
-                selectedType: '='
+                type: '='
             },
             controller,
-            controllerAs: 'container',
+            controllerAs: 'algorithmContainer',
             restrict: 'E',
             templateUrl: 'src/directives/templates/algorithm-container.html'
         };
 
     }
 
-    function controller($log) {
+    function filter() {
+        return function (input, type, searchString) {
+            if (searchString) {
+                return input;
+            }
+            let result = [];
+            angular.forEach(input, algorithm => {
+                if (algorithm.type === type) {
+                    result.push(algorithm);
+                }
+            });
+            return result;
+        }
+
+    }
+
+    function controller($log, $rootScope, types) {
         const vm = this;
+        vm.searchString = '';
+        vm.onTextClick = onTextClick;
+        //vm.type = selectedType;
+        $rootScope.$on('$locationChangeStart', (event, next, current) => {
+            let splittedUrl = next.split('/');
+            let lastTag = splittedUrl[splittedUrl.length - 1];
+
+            for (let key in types) {
+                if (types[key] === lastTag) {
+                    vm.type = lastTag;
+                }
+            }
+            $log.info(`Location changed to: /${lastTag}`);
+        });
+
+        function onTextClick($event) {
+            $event.target.select();
+        };
+
 
     }
 }());

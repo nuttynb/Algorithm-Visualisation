@@ -3,38 +3,17 @@
     <span class="tagline pull-left">{{main.appDetails.tagline}}</span>
     <div class="nav-wrapper pull-left">
         <ul class="nav nav-pills">
-            <li ng-class="{active: main.nav.isActive('/sorting')}" ng-click="main.setSelectedType('sorting');">
+            <li ng-class="{active: main.nav.isActive('/sorting')}">
                 <a href="#/sorting">Sorting algorithms</a>
             </li>
-            <li ng-class="{active: main.nav.isActive('/tree')}" ng-click="main.setSelectedType('tree');">
+            <li ng-class="{active: main.nav.isActive('/tree')}">
                 <a href="#/tree">Tree algorithms</a>
             </li>
         </ul>
     </div>
-    <form role="form">
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search here..."
-                   ng-model="main.searchString">
-        </div>
-    </form>
 
-    <div class="container">
-        <div id="algorithmListWrapper">
-            <ul class="list-unstyled">
-                <li class="algorithm" ng-repeat="algorithm in main.selectedAlgorithms | filter:main.searchString">
-                    <div class="book-details clearfix">
-                        <h3>{{algorithm.name}}</h3>
-                        <ul class="list-unstyled list-inline">
-                            <li>Type: {{algorithm.type}}</li>
-                            <li>Description: {{algorithm.description | uppercase}}</li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
 
-    <algorithm-container algorithms="main.selectedAlgorithms" searchString="main.searchString">
+    <algorithm-container algorithms="main.algorithms" type="main.selectedType">
     </algorithm-container>
 
 </div>

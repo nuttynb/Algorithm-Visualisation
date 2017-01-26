@@ -15,6 +15,5 @@
 
     function controller($log) {
         const vm = this;
-
     }
 }());

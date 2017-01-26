@@ -18,12 +18,12 @@
     function config($routeProvider) {
         $routeProvider
             .when('/sorting', {
-                //templateUrl: 'view/sorting.html',
-                controller: 'sorting'
+                templateUrl: 'src/directives/templates/algorithm-container.html',
+                controller: 'algorithmContainer'
             })
             .when('/tree', {
-               //templateUrl: 'view/tree.html',
-                controller: 'tree'
+                templateUrl: 'src/directives/templates/algorithm-container.html',
+                controller: 'algorithmContainer'
             })
             .otherwise({
                 redirectTo: '/sorting'
@@ -39,12 +39,13 @@
         $location.path()===''? path = 'sorting': path=$location.path().substr(1);
 
         vm.nav = {};
-        vm.searchString = '';
+        //vm.searchString = '';
         vm.algorithms = algorithmFactory.getAlgorithms();
-        vm.selectedAlgorithms = algorithmFactory.findAlgorithmsByType(path);
-        $log.debug(vm.selectedAlgorithms);
+        vm.selectedType = 'sorting';
+        //vm.selectedAlgorithms = algorithmFactory.findAlgorithmsByType(path);
+        //$log.debug(vm.selectedAlgorithms);
         vm.nav.isActive = isActive;
-        vm.setSelectedType = setSelectedType;
+
 
         function init() {
             vm.appDetails = {};
@@ -61,11 +62,6 @@
             return false;
         }
 
-        function setSelectedType(type) {
-            vm.selectedType = type;
-            vm.selectedAlgorithms = algorithmFactory.findAlgorithmsByType(type);
-            $log.debug(vm.selectedAlgorithms);
-        }
 
     }
 }());

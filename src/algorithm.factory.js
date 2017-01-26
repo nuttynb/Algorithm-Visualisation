@@ -3,17 +3,17 @@
         .module('algViz.main')
         .factory('algorithmFactory', algorithmFactory);
     
-    function algorithmFactory() {
+    function algorithmFactory(types) {
 
         let algorithms = [
             {
                 name: 'bubble',
-                type: 'sorting',
+                type: types.SORTING,
                 description: 'asdasda'
             },
             {
                 name: '2',
-                type: 'tree',
+                type: types.TREE,
                 description: 'asdasasdada'
             }
         ];

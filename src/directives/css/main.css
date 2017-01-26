@@ -36,10 +36,7 @@
 	padding: 10px;
 	margin-bottom: 10px;	
 	position: relative;
-}
-
-#bookListWrapper .algorithm .algorithm-details {
-	margin-left: 160px;
+	width: 100%;
 }
 
 .container.ng-enter {
