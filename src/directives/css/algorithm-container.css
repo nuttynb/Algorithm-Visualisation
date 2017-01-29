@@ -1,0 +1,56 @@
+#algorithmListWrapper {
+    width: 100%;
+    padding: 10px;
+}
+
+#algorithmListWrapper input {
+    width: 25%;
+}
+
+#algorithmListWrapper .algorithm {
+    border: 1px solid gray;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.container.ng-enter {
+    -webkit-transition:0.5s linear all;
+    -moz-transition:0.5s linear all;
+    -o-transition:0.5s linear all;
+    transition:0.5s linear all;
+    opacity:0;
+}
+
+.container.ng-enter-active {
+    opacity:1;
+}
+
+.algorithm.ng-leave {
+    -webkit-transition:0.5s linear all;
+    -moz-transition:0.5s linear all;
+    -o-transition:0.5s linear all;
+    transition:0.5s linear all;
+    opacity:1;
+    left: 0;
+}
+
+.algorithm.ng-leave-active {
+    opacity:0;
+    left: 600px;
+}
+
+.algorithm.ng-enter {
+    -webkit-transition:0.5s linear all;
+    -moz-transition:0.5s linear all;
+    -o-transition:0.5s linear all;
+    transition:0.5s linear all;
+    opacity:0;
+    left: 600px;
+}
+
+.algorithm.ng-enter-active {
+    opacity:1;
+    left: 0;
+}

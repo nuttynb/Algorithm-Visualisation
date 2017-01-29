@@ -3,21 +3,25 @@
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Search everywhere..."
                    ng-model="algorithmContainer.searchString"
-                   ng-click="algorithmContainer.onTextClick($event)">
+                   ng-click="algorithmContainer.onTextClick($event);">
         </div>
     </form>
-    <div id="algorithmListWrapper">
+    <div id="algorithmListWrapper" ng-if="algorithmContainer.isAlgorithmListShowed">
         <ul class="list-unstyled">
             <li class="algorithm btn btn-default"
-                ng-repeat="algorithm in algorithmContainer.algorithms | algorithmFilterByType : algorithmContainer.type : algorithmContainer.searchString | filter : algorithmContainer.searchString">
+                ng-repeat="algorithm in algorithmContainer.algorithms | algorithmFilterByType : algorithmContainer.type : algorithmContainer.searchString | filter : algorithmContainer.searchString"
+                ng-click="algorithmContainer.showAlgorithm(algorithm);">
                 <div class="clearfix">
-                    <h3>{{algorithm.name}}</h3>
-                    <ul class="list-unstyled list-inline">
-                        <li>Type: {{algorithm.type | uppercase}}</li>
-                        <li>Description: {{algorithm.description}}</li>
+                    <h3>{{::algorithm.name}}</h3>
+                    <ul class="list-unstyled">
+                        <li>Type: {{::algorithm.type | uppercase}}</li>
+                        <li>Description: <span ng-bind="algorithm.description"></span></li>
                     </ul>
                 </div>
             </li>
         </ul>
+    </div>
+    <div ng-if="!algorithmContainer.isAlgorithmListShowed">
+        <sorting-rectangles></sorting-rectangles>
     </div>
 </div>

@@ -1,4 +1,5 @@
 (function () {
+    'use strict';
     angular
         .module('algViz.main')
         .directive('sortingRectangles', Directive);
@@ -10,14 +11,16 @@
                 values: '&'
             },
             controller,
-            controllerAs: 'sorting',
+            controllerAs: 'sortingRectangles',
             restrict: 'E',
-            templateUrl: 'view/sorting-rectangles.html'
+            templateUrl: 'src/directives/templates/sorting-rectangles.html'
         };
     }
 
     function controller($log) {
         const vm = this;
+        vm.svgWidth = 555;
+        vm.svgHeight = 666;
 
     }
 }());
