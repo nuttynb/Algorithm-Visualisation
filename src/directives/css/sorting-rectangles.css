@@ -1,0 +1,6 @@
+.rectangle {
+    fill: black;
+}
+.selected-rectangle {
+    fill: red;
+}

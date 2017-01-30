@@ -1,12 +1,16 @@
 <svg ng-attr-width="{{sortingRectangles.svgWidth}}" ng-attr-height="{{sortingRectangles.svgHeight}}">
-    <g ng-repeat="rect in sortingRectangles.values" >
-        <rect class="rectangle" ng-attr-width="{{sortingRectangles.rectanglesWidth}}"
-              ng-attr-height="{{sortingRectangles.getRectHeight(rect)}}"
-              ng-attr-x="{{sortingRectangles.getXPosition($index)}}"
-              ng-attr-y="{{-sortingRectangles.svgHeight/2}}"
-              transform="scale(1,-1)"></rect>
-        <text ng-attr-x="{{sortingRectangles.getXPosition($index) + sortingRectangles.rectanglesWidth / 2 - 5}}"
-              ng-attr-y="{{sortingRectangles.svgHeight/2 + 20}}"
-              fill="red">{{rect}}</text>
+    <g ng-repeat="rect in sortingRectangles.rectangles">
+        <rect ng-attr-id="{{rect.id}}" ng-class="{'rectangle': !rect.selectedRectangle, 'selected-rectangle': rect.selectedRectangle}"
+              ng-attr-width="{{sortingRectangles.rectanglesWidth}}"
+              ng-attr-height="{{rect.height}}"
+              ng-attr-x="{{rect.x}}"
+              ng-attr-y="{{sortingRectangles.rectanglesYPosition}}"
+              transform="scale(1,-1)">
+        </rect>
+        <text ng-attr-x="{{rect.x + sortingRectangles.textPosition.x}}"
+              ng-attr-y="{{sortingRectangles.textPosition.y}}"
+              fill="red">{{rect.value}}
+        </text>
     </g>
 </svg>
+<button class="btn btn-default" ng-click="sortingRectangles.sort()">Sort</button>
