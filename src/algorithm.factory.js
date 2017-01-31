@@ -32,6 +32,12 @@
                 name: 'Binary Search Tree',
                 type: types.TREE,
                 description: 'asdasasdada'
+            },
+            {
+                id: 4,
+                name: 'Example',
+                type: types.TREE,
+                description: 'ExampleDescription'
             }
         ];
 

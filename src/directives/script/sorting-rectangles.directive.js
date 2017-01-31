@@ -8,7 +8,7 @@
         return {
             bindToController: true,
             scope: {
-                values: '='
+                values: '=',
             },
             controller,
             controllerAs: 'sortingRectangles',

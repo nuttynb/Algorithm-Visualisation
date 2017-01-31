@@ -42,6 +42,7 @@
         //vm.searchString = '';
         vm.algorithms = algorithmFactory.getAlgorithms();
         vm.selectedType = 'sorting';
+        vm.isInAlgorithmView = false;
         //vm.selectedAlgorithms = algorithmFactory.findAlgorithmsByType(path);
         //$log.debug(vm.selectedAlgorithms);
         vm.nav.isActive = isActive;

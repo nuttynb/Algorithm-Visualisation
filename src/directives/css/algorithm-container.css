@@ -54,3 +54,7 @@
     opacity:1;
     left: 0;
 }
+
+.long-text {
+    white-space: normal;
+}

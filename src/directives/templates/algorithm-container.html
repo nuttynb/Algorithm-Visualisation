@@ -6,22 +6,19 @@
                    ng-click="algorithmContainer.onTextClick($event);">
         </div>
     </form>
-    <div id="algorithmListWrapper" ng-if="algorithmContainer.isAlgorithmListShowed">
+    <div id="algorithmListWrapper">
         <ul class="list-unstyled">
             <li class="algorithm btn btn-default"
                 ng-repeat="algorithm in algorithmContainer.algorithms | algorithmFilterByType : algorithmContainer.type : algorithmContainer.searchString | filter : algorithmContainer.searchString"
                 ng-click="algorithmContainer.showAlgorithm(algorithm);">
-                <div class="clearfix">
+                <div class="clearfix long-text">
                     <h3>{{::algorithm.name}}</h3>
                     <ul class="list-unstyled">
                         <li>Type: {{::algorithm.type | uppercase}}</li>
-                        <li>Description: <span ng-bind="algorithm.description"></span></li>
+                        <li>Description: <span style="width" ng-bind="algorithm.description"></span></li>
                     </ul>
                 </div>
             </li>
         </ul>
-    </div>
-    <div ng-if="!algorithmContainer.isAlgorithmListShowed">
-        <sorting-rectangles values="[2,1,5,4,3,0]"></sorting-rectangles>
     </div>
 </div>

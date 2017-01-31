@@ -10,7 +10,8 @@
             bindToController: true,
             scope: {
                 algorithms: '=',
-                type: '='
+                type: '=',
+                isInAlgorithmView: '=algorithmView'
             },
             controller,
             controllerAs: 'algorithmContainer',
@@ -40,7 +41,7 @@
         const vm = this;
         vm.searchString = '';
         vm.onTextClick = onTextClick;
-        vm.isAlgorithmListShowed = true;
+
         vm.selectedAlgorithm = {};
         vm.showAlgorithm = showAlgorithm;
 
@@ -62,7 +63,7 @@
         };
 
         function showAlgorithm(algorithm) {
-            vm.isAlgorithmListShowed = false;
+            vm.isInAlgorithmView = true;
             vm.selectedAlgorithm = algorithm;
         }
 
