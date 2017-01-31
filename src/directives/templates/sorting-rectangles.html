@@ -1,13 +1,14 @@
 <svg ng-attr-width="{{sortingRectangles.svgWidth}}" ng-attr-height="{{sortingRectangles.svgHeight}}">
     <g ng-repeat="rect in sortingRectangles.rectangles">
-        <rect ng-attr-id="{{rect.id}}" ng-class="{'rectangle': !rect.selectedRectangle, 'selected-rectangle': rect.selectedRectangle}"
+        <rect ng-attr-id="{{rect.id}}" class="rectangle"
               ng-attr-width="{{sortingRectangles.rectanglesWidth}}"
               ng-attr-height="{{rect.height}}"
               ng-attr-x="{{rect.x}}"
               ng-attr-y="{{sortingRectangles.rectanglesYPosition}}"
               transform="scale(1,-1)">
         </rect>
-        <text ng-attr-x="{{rect.x + sortingRectangles.textPosition.x}}"
+        <text ng-attr-id="{{rect.id}}-text"
+              ng-attr-x="{{rect.x + sortingRectangles.textPosition.x}}"
               ng-attr-y="{{sortingRectangles.textPosition.y}}"
               fill="red">{{rect.value}}
         </text>

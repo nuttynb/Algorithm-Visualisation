@@ -38,7 +38,6 @@
                         value: vm.values[i],
                         x: getXPosition(i),
                         height: getRectHeight(vm.values[i]),
-                        selectedRectangle: false
                     }
                 );
             }
@@ -75,32 +74,45 @@
             let swapped;
             do {
                 swapped = false;
+                await sleep(2000);
                 for (let i = 0; i < vm.rectangles.length - 1; i++) {
                     let leftElement = vm.rectangles[i];
                     let rightElement = vm.rectangles[i + 1];
-                    vm.rectangles[i].selectedRectangle = true;
-                    vm.rectangles[i + 1].selectedRectangle = true;
+                    applyStyleClass('selected-rectangle', [leftElement.id, rightElement.id]);
                     await sleep(2000);
                     if (leftElement.value > rightElement.value) {
                         swap(leftElement, rightElement, i);
                         swapped = true;
                     }
-                    vm.rectangles[i].selectedRectangle = false;
-                    vm.rectangles[i + 1].selectedRectangle = false;
+                    removeStyleClass('selected-rectangle', [leftElement.id, rightElement.id]);
                 }
             }
             while (swapped);
+        }
+        function applyStyleClass(styleClass, elementIds){
+            for (let elementId of elementIds){
+                angular.element(document.getElementById(elementId)).addClass(styleClass);
+            }
+        }
+        function removeStyleClass(styleClass, elementIds){
+            for (let elementId of elementIds){
+                angular.element(document.getElementById(elementId)).removeClass(styleClass);
+            }
         }
 
         function swap(left, right, index) {
             [left.x, right.x] = [right.x, left.x];
             vm.rectangles[index] = vm.rectangles.splice(index+1, 1, vm.rectangles[index])[0];
 
-            let leftSvgElement = document.getElementById(left.id);
-            let rightSvgElement = document.getElementById(right.id);
+            let leftRectElement = document.getElementById(left.id);
+            let rightRectElement = document.getElementById(right.id);
+            let leftTextElement = document.getElementById(`${left.id}-text`);
+            let rightTextElement = document.getElementById(`${right.id}-text`);
 
-            leftSvgElement.setAttribute("x", left.x);
-            rightSvgElement.setAttribute("x", right.x);
+            leftRectElement.setAttribute("x", left.x);
+            rightRectElement.setAttribute("x", right.x);
+            leftTextElement.setAttribute("x", left.x + vm.textPosition.x);
+            rightTextElement.setAttribute("x", right.x + vm.textPosition.x);
         }
     }
 }());
