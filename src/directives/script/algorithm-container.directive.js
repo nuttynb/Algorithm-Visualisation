@@ -11,7 +11,8 @@
             scope: {
                 algorithms: '=',
                 type: '=',
-                isInAlgorithmView: '=algorithmView'
+                isInAlgorithmView: '=algorithmView',
+                selectedAlgorithm: '='
             },
             controller,
             controllerAs: 'algorithmContainer',
@@ -37,18 +38,17 @@
 
     }
 
-    function controller($log, $rootScope, types) {
+    function controller($log, $rootScope,$scope, types) {
         const vm = this;
         vm.searchString = '';
         vm.onTextClick = onTextClick;
 
-        vm.selectedAlgorithm = {};
         vm.showAlgorithm = showAlgorithm;
 
 
         $rootScope.$on('$locationChangeStart', (event, next, current) => {
-            let splittedUrl = next.split('/');
-            let lastTag = splittedUrl[splittedUrl.length - 1];
+            let splitUrl = next.split('/');
+            let lastTag = splitUrl[splitUrl.length - 1];
 
             for (let key in types) {
                 if (types[key] === lastTag) {
@@ -65,8 +65,8 @@
         function showAlgorithm(algorithm) {
             vm.isInAlgorithmView = true;
             vm.selectedAlgorithm = algorithm;
+            $log.info('Selected algorithm: ' + vm.selectedAlgorithm.name);
+            //$rootScope.$broadcast('algorithmChanged');
         }
-
-
     }
 }());

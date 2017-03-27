@@ -18,12 +18,10 @@
     function config($routeProvider) {
         $routeProvider
             .when('/sorting', {
-                templateUrl: 'src/directives/templates/algorithm-container.html',
-                controller: 'algorithmContainer'
+                templateUrl: 'src/directives/templates/main.html'
             })
             .when('/tree', {
-                templateUrl: 'src/directives/templates/algorithm-container.html',
-                controller: 'algorithmContainer'
+                templateUrl: 'src/directives/templates/main.html'
             })
             .otherwise({
                 redirectTo: '/sorting'
@@ -31,21 +29,17 @@
     }
 
     function controller(
-        $location, $log, algorithmFactory
+        $location, $log, algorithmFactory, svgTool
     ) {
         const vm = this;
 
-        let path;
-        $location.path()===''? path = 'sorting': path=$location.path().substr(1);
-
         vm.nav = {};
-        //vm.searchString = '';
         vm.algorithms = algorithmFactory.getAlgorithms();
         vm.selectedType = 'sorting';
         vm.isInAlgorithmView = false;
-        //vm.selectedAlgorithms = algorithmFactory.findAlgorithmsByType(path);
-        //$log.debug(vm.selectedAlgorithms);
+        vm.selectedAlgorithm = {};
         vm.nav.isActive = isActive;
+        vm.svgTool = svgTool;
 
 
         function init() {

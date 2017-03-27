@@ -3,8 +3,8 @@
     <span class="tagline pull-left">{{main.appDetails.tagline}}</span>
     <div class="nav-wrapper pull-left">
         <ul class="nav nav-pills">
-            <li ng-if="main.isInAlgorithmView" ng-click="main.isInAlgorithmView = false;">
-                <a href="#/">Back to the algorithm list</a>
+            <li ng-if="main.isInAlgorithmView" ng-click="main.isInAlgorithmView = false; main.svgTool.remove()">
+                <a href="#/{{main.selectedType}}">Back to the algorithm list</a>
             </li>
             <li ng-class="{active: main.nav.isActive('/sorting')}"
                 ng-if="!main.isInAlgorithmView">
@@ -16,15 +16,17 @@
             </li>
         </ul>
     </div>
-
+</div>
+<div class="center-block">
     <algorithm-container algorithms="main.algorithms"
                          type="main.selectedType"
                          algorithm-view="main.isInAlgorithmView"
+                         selected-algorithm="main.selectedAlgorithm"
                          ng-if="!main.isInAlgorithmView">
     </algorithm-container>
-    <sorting-rectangles values="[2,1,5,4,3,0]"
+    <sorting-rectangles values="[2,1,5,4,3,0,30,20]"
+                        selected-algorithm="main.selectedAlgorithm"
                         ng-if="main.isInAlgorithmView">
     </sorting-rectangles>
-
 </div>
 
