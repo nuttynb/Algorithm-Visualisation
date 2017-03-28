@@ -26,7 +26,9 @@
             }
             return {
                 createRectangle,
-                createText
+                createText,
+                createCircle,
+                createLine
             };
         }
 
@@ -57,14 +59,27 @@
             };
         }
 
-        function createCircle(x, y, r) {
-            let circle = paper.circle(x, y, r);
+        function createCircle(x, y) {
+            let circle = paper.circle(x, y, 50);
             circle.attr({
                 id: `rect-${counter}`,
                 fill: '#bada55',
                 stroke: '#000',
                 strokeWidth: 5,
             });
+            counter++;
+
+            return circle;
+        }
+
+        function createLine(from, to) {
+            let line = paper.path(`M${from.x},${from.y}L${to.x},${to.y}`);
+
+            return line;
+        }
+
+        function drawLineBetweenCircles(firstCircle, secondCircle) {
+
         }
 
         function createText(id, x, y, text) {
