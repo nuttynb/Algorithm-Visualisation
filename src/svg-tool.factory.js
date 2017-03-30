@@ -25,6 +25,8 @@
                 });
             }
             return {
+                applyStyleClass,
+                removeStyleClass,
                 createRectangle,
                 createText,
                 createCircle,
@@ -36,6 +38,18 @@
             $log.info("removing paper...");
             paper.clear();
             counter = 0;
+        }
+
+        function applyStyleClass(styleClass, elementIds) {
+            for (let elementId of elementIds) {
+                angular.element(document.getElementById(elementId)).addClass(styleClass);
+            }
+        }
+
+        function removeStyleClass(styleClass, elementIds) {
+            for (let elementId of elementIds) {
+                angular.element(document.getElementById(elementId)).removeClass(styleClass);
+            }
         }
 
         function createRectangle(value, x, y, width, height) {
@@ -59,16 +73,16 @@
             };
         }
 
-        function createCircle(x, y) {
-            let circle = paper.circle(x, y, 50);
+        function createCircle(x, y, value) {
+            let circle = paper.circle(x, y, 30);
             circle.attr({
-                id: `rect-${counter}`,
+                id: `circle-${counter}`,
                 fill: '#bada55',
                 stroke: '#000',
                 strokeWidth: 5,
             });
+            let text = createText(`circle-${counter}-text`, x, y, value);
             counter++;
-
             return circle;
         }
 

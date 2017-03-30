@@ -27,9 +27,10 @@
         vm.rectanglesYPosition = -vm.svgHeight / 2;
 
         vm.sort = sort;
+        let svgCreator
 
         function init() {
-            let svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
+            svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
 
             for (let i = 0; i < vm.values.length; i++) {
                 vm.rectangles.push(
@@ -47,13 +48,20 @@
             }
         }
 
-        init();
+        //init();
 
         function sort() {
             if (vm.selectedAlgorithm.id === 1) {
                 bubbleSort();
             } else if (vm.selectedAlgorithm.id === 2) {
                 selectSort();
+            } else if (vm.selectedAlgorithm.id === 3) {
+                svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
+                var bst = new BinarySearchTree();
+                for (let i = 0; i < vm.values.length; i++) {
+                    $log.info("wat");
+                    bst.push(vm.values[i]);
+                }
             }
         }
 
@@ -90,14 +98,14 @@
                 for (let i = 0; i < vm.rectangles.length - 1; i++) {
                     let leftElement = vm.rectangles[i];
                     let rightElement = vm.rectangles[i + 1];
-                    applyStyleClass('selected-rectangle', [leftElement.id, rightElement.id]);
+                    svgCreator.applyStyleClass('selected-rectangle', [leftElement.id, rightElement.id]);
                     await sleep(1000);
                     if (leftElement.value > rightElement.value) {
                         swap(i, i + 1);
                         swapped = true;
                     }
                     await sleep(2000);
-                    removeStyleClass('selected-rectangle', [leftElement.id, rightElement.id]);
+                    svgCreator.removeStyleClass('selected-rectangle', [leftElement.id, rightElement.id]);
                 }
             }
             while (swapped);
@@ -105,12 +113,12 @@
 
         async function selectSort() {
             for (let i = 0; i < vm.rectangles.length; i++) {
-                applyStyleClass('selected-rectangle', [vm.rectangles[i].id]);
+                svgCreator.applyStyleClass('selected-rectangle', [vm.rectangles[i].id]);
                 let min = i;
                 for (let j = vm.rectangles.length - 1; j > i; j--) {
                     if (vm.rectangles[j].value < vm.rectangles[min].value) {
                         min = j;
-                        applyStyleClass('selected-rectangle', [vm.rectangles[min].id]);
+                        svgCreator.applyStyleClass('selected-rectangle', [vm.rectangles[min].id]);
                         await sleep(2000);
                     }
                 }
@@ -119,19 +127,7 @@
                     swap(min, i);
                 }
                 await sleep(2000);
-                removeStyleClass('selected-rectangle', [vm.rectangles[i].id, vm.rectangles[min].id]);
-            }
-        }
-
-        function applyStyleClass(styleClass, elementIds) {
-            for (let elementId of elementIds) {
-                angular.element(document.getElementById(elementId)).addClass(styleClass);
-            }
-        }
-
-        function removeStyleClass(styleClass, elementIds) {
-            for (let elementId of elementIds) {
-                angular.element(document.getElementById(elementId)).removeClass(styleClass);
+                svgCreator.removeStyleClass('selected-rectangle', [vm.rectangles[i].id, vm.rectangles[min].id]);
             }
         }
 
@@ -147,11 +143,13 @@
             vm.rectangles[rightIndex].element.textElement.animate({"x": right.x + textX}, 1000, mina.linear);
             vm.rectangles[leftIndex] = vm.rectangles.splice(rightIndex, 1, vm.rectangles[leftIndex])[0];
         }
-/*
+
+
         class Node {
-            constructor(x, y, value) {
+            constructor(x, y, value, parentNode) {
                 this.value = value;
-                this.circleElement = vm.svgTool.createCircle(x, y);
+                this.circleElement = svgCreator.createCircle(x, y, value);
+                this.parentNode = parentNode;
                 this.leftNode = null;
                 this.leftLineElement = null;
                 this.rightNode = null;
@@ -161,41 +159,39 @@
 
         function BinarySearchTree() {
             this.root = null;
-            this.actualLevel = 0;
         }
 
         BinarySearchTree.prototype.push = function (value) {
-            var root = this.root;
-            this.actualLevel = 1;
+            let root = this.root;
+            var actualLevel = 2;
             if (!root) {
-                this.root = new Node(vm.svgWidth / 2, 20, value);
+                this.root = new Node(vm.svgWidth / 2, 60, value, null);
                 return;
             }
 
-            var currentNode = root;
+            let currentNode = root;
 
             while (currentNode) {
                 if (value < currentNode.value) {
-                    if (!currentNode.left) {
-                        currentNode.left = newNode;
+                    if (!currentNode.leftNode) {
+                        currentNode.leftNode = new Node(Number(currentNode.circleElement.attr('cx')) - 50, Number(currentNode.circleElement.attr('cy')) + 60, value, currentNode);
                         break;
+                    } else {
+                        actualLevel++;
+                        currentNode = currentNode.leftNode;
                     }
-                    else {
-                        currentNode = currentNode.left;
-                    }
-                }
-                else {
-                    if (!currentNode.right) {
-                        currentNode.right = newNode;
+                } else {
+                    if (!currentNode.rightNode) {
+                        currentNode.rightNode = new Node(Number(currentNode.circleElement.attr('cx')) + 50, Number(currentNode.circleElement.attr('cy')) + 60, value, currentNode);
                         break;
-                    }
-                    else {
-                        currentNode = currentNode.right;
+                    } else {
+                        actualLevel++;
+                        currentNode = currentNode.rightNode;
                     }
                 }
             }
 
-        }*/
+        }
         /*$rootScope.$on('algorithmChanged', function(event, args) {
          $log.info("fos");
          svgTool.remove();
