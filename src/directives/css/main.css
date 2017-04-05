@@ -1,6 +1,20 @@
+:root {
+    --belize-hole: #2980b9;
+    --peter-river: #3498db;
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #ecf0f1;
+    font-size: 16px;
+    line-height: 120%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 #headerWrapper {
     width: 100%;
 	height: 80px;
+    background-color: #bdc3c7;
+    margin-bottom: 20px;
 }
 
 .logo {
@@ -20,4 +34,9 @@
 .nav-wrapper {
     margin-left: 100px;
     margin-top: 15px;
+}
+
+.link-unstyled, .link-unstyled:link, .link-unstyled:hover, .link-unstyled:focus {
+    color: inherit;
+    text-decoration: none;
 }

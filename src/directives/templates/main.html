@@ -1,10 +1,12 @@
 <div id="headerWrapper">
-    <span class="logo pull-left">{{main.appDetails.title}}</span>
-    <span class="tagline pull-left">{{main.appDetails.tagline}}</span>
+    <a class="link-unstyled" href="" ng-click="main.logoClicked();">
+        <span class="logo pull-left">{{main.appDetails.title}}</span>
+        <span class="tagline pull-left">{{main.appDetails.tagline}}</span>
+    </a>
     <div class="nav-wrapper pull-left">
         <ul class="nav nav-pills">
             <li ng-if="main.isInAlgorithmView" ng-click="main.isInAlgorithmView = false; main.svgTool.remove()">
-                <a href="#/{{main.selectedType}}">Back to the algorithm list</a>
+                <a href="#/{{main.selectedType}}" ng-click="main.stopVisualizing();">Back to the algorithm list</a>
             </li>
             <li ng-class="{active: main.nav.isActive('/sorting')}"
                 ng-if="!main.isInAlgorithmView">

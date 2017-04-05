@@ -11,6 +11,7 @@
         let svgHeight;
         let paper;
         let counter = 0;
+        let radius = 20;
 
         function createSvg(width, height) {
             if (paper === undefined) {
@@ -30,7 +31,8 @@
                 createRectangle,
                 createText,
                 createCircle,
-                createLine
+                createLine,
+                drawLineBetweenCircles
             };
         }
 
@@ -74,26 +76,43 @@
         }
 
         function createCircle(x, y, value) {
-            let circle = paper.circle(x, y, 30);
+            let circle = paper.circle(x, y, radius);
             circle.attr({
                 id: `circle-${counter}`,
                 fill: '#bada55',
                 stroke: '#000',
                 strokeWidth: 5,
             });
-            let text = createText(`circle-${counter}-text`, x, y, value);
+            let text = createText(`circle-${counter}-text`, x - 4, y + 4, value);
             counter++;
             return circle;
         }
 
-        function createLine(from, to) {
+        function createLine(id, from, to) {
+            $log.info(`from x: ${from.x}, from y: ${from.y}`);
             let line = paper.path(`M${from.x},${from.y}L${to.x},${to.y}`);
+            line.attr({
+                id: `${id}-line`,
+                stroke: '#000',
+                strokeWidth: 3,
+                strokeLinecap: 'round',
+                strokeDasharray: 1000,
+                strokeDashoffset: 1000,
+            })
 
             return line;
         }
 
         function drawLineBetweenCircles(firstCircle, secondCircle) {
-
+            let first = {
+                x: firstCircle.attr('cx'),
+                y: Number(firstCircle.attr('cy')) + radius
+            }
+            let second = {
+                x: secondCircle.attr('cx'),
+                y: Number(secondCircle.attr('cy')) - radius
+            }
+            return createLine(firstCircle.attr('id'), first, second);
         }
 
         function createText(id, x, y, text) {

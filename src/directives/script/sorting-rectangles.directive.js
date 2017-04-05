@@ -29,39 +29,106 @@
         vm.sort = sort;
         let svgCreator
 
-        function init() {
-            svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
+        let doStop = true;
 
-            for (let i = 0; i < vm.values.length; i++) {
-                vm.rectangles.push(
-                    {
-                        id: `rect-${i}`,
-                        value: vm.values[i],
-                        x: getXPosition(i),
-                        height: getRectHeight(vm.values[i]),
-                        init: function () {
-                            this.element = svgCreator.createRectangle(this.value, this.x, vm.rectanglesYPosition, vm.rectanglesWidth, this.height);
-                            return this;
-                        }
-                    }.init()
-                );
+        class Node {
+            constructor(x, y, value) {
+                this.value = value;
+                this.circleElement = svgCreator.createCircle(x, y, value);
+                this.leftNode = null;
+                this.leftLineElement = null;
+                this.rightNode = null;
+                this.rightLineElement = null;
             }
         }
 
-        //init();
+        function BinarySearchTree() {
+            this.root = null;
+        }
+
+        BinarySearchTree.prototype.push = function (value) {
+            let root = this.root;
+
+            if (!root) {
+                this.root = new Node(vm.svgWidth / 2, 60, value, null);
+                return;
+            }
+
+            let currentNode = root;
+
+            while (currentNode) {
+                if (doStop) {
+                    break;
+                }
+                if (value < currentNode.value) {
+                    if (!currentNode.leftNode) {
+
+                        currentNode.leftNode = new Node(Number(currentNode.circleElement.attr('cx')) - 50, Number(currentNode.circleElement.attr('cy')) + 60, value);
+
+                        setTimeout(function () {
+                            currentNode.leftLineElement = svgCreator.drawLineBetweenCircles(currentNode.circleElement, currentNode.leftNode.circleElement).animate({strokeDashoffset: 0}, 10000, mina.linear);
+                        }, 2000);
+
+                        break;
+                    } else {
+                        currentNode = currentNode.leftNode;
+                    }
+                } else {
+                    if (!currentNode.rightNode) {
+                        setTimeout(function () {
+                            currentNode.rightNode = new Node(Number(currentNode.circleElement.attr('cx')) + 50, Number(currentNode.circleElement.attr('cy')) + 60, value);
+                        }, 1000);
+                        setTimeout(function () {
+                            currentNode.rightLineElement = svgCreator.drawLineBetweenCircles(currentNode.circleElement, currentNode.rightNode.circleElement).animate({strokeDashoffset: 0}, 10000, mina.linear);
+                        }, 2000);
+                        break;
+
+                    } else {
+                        currentNode = currentNode.rightNode;
+                    }
+                }
+            }
+
+        }
+
+        async function init() {
+            svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
+
+            if (vm.selectedAlgorithm.id === 3) {
+                var bst = new BinarySearchTree();
+                for (let i = 0; i < vm.values.length; i++) {
+                    bst.push(vm.values[i]);
+                    await sleep(3000);
+                }
+            } else {
+                for (let i = 0; i < vm.values.length; i++) {
+                    vm.rectangles.push(
+                        {
+                            id: `rect-${i}`,
+                            value: vm.values[i],
+                            x: getXPosition(i),
+                            height: getRectHeight(vm.values[i]),
+                            init: function () {
+                                this.element = svgCreator.createRectangle(this.value, this.x, vm.rectanglesYPosition, vm.rectanglesWidth, this.height);
+                                return this;
+                            }
+                        }.init()
+                    );
+                }
+            }
+        }
+
+        init();
 
         function sort() {
+            doStop = false;
             if (vm.selectedAlgorithm.id === 1) {
                 bubbleSort();
             } else if (vm.selectedAlgorithm.id === 2) {
                 selectSort();
             } else if (vm.selectedAlgorithm.id === 3) {
                 svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
-                var bst = new BinarySearchTree();
-                for (let i = 0; i < vm.values.length; i++) {
-                    $log.info("wat");
-                    bst.push(vm.values[i]);
-                }
+
             }
         }
 
@@ -96,6 +163,9 @@
                 swapped = false;
                 await sleep(2000);
                 for (let i = 0; i < vm.rectangles.length - 1; i++) {
+                    if (doStop) {
+                        break;
+                    }
                     let leftElement = vm.rectangles[i];
                     let rightElement = vm.rectangles[i + 1];
                     svgCreator.applyStyleClass('selected-rectangle', [leftElement.id, rightElement.id]);
@@ -113,6 +183,9 @@
 
         async function selectSort() {
             for (let i = 0; i < vm.rectangles.length; i++) {
+                if (doStop) {
+                    break;
+                }
                 svgCreator.applyStyleClass('selected-rectangle', [vm.rectangles[i].id]);
                 let min = i;
                 for (let j = vm.rectangles.length - 1; j > i; j--) {
@@ -145,57 +218,11 @@
         }
 
 
-        class Node {
-            constructor(x, y, value, parentNode) {
-                this.value = value;
-                this.circleElement = svgCreator.createCircle(x, y, value);
-                this.parentNode = parentNode;
-                this.leftNode = null;
-                this.leftLineElement = null;
-                this.rightNode = null;
-                this.rightLineElement = null;
-            }
-        }
 
-        function BinarySearchTree() {
-            this.root = null;
-        }
-
-        BinarySearchTree.prototype.push = function (value) {
-            let root = this.root;
-            var actualLevel = 2;
-            if (!root) {
-                this.root = new Node(vm.svgWidth / 2, 60, value, null);
-                return;
-            }
-
-            let currentNode = root;
-
-            while (currentNode) {
-                if (value < currentNode.value) {
-                    if (!currentNode.leftNode) {
-                        currentNode.leftNode = new Node(Number(currentNode.circleElement.attr('cx')) - 50, Number(currentNode.circleElement.attr('cy')) + 60, value, currentNode);
-                        break;
-                    } else {
-                        actualLevel++;
-                        currentNode = currentNode.leftNode;
-                    }
-                } else {
-                    if (!currentNode.rightNode) {
-                        currentNode.rightNode = new Node(Number(currentNode.circleElement.attr('cx')) + 50, Number(currentNode.circleElement.attr('cy')) + 60, value, currentNode);
-                        break;
-                    } else {
-                        actualLevel++;
-                        currentNode = currentNode.rightNode;
-                    }
-                }
-            }
-
-        }
-        /*$rootScope.$on('algorithmChanged', function(event, args) {
-         $log.info("fos");
-         svgTool.remove();
-         //init();
-         });*/
+        $rootScope.$on('algorithmStopped', function (event, args) {
+            $log.info("stop");
+            doStop = true;
+            svgTool.remove();
+        });
     }
 }());

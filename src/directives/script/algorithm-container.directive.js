@@ -24,6 +24,9 @@
 
     function filter() {
         return function (input, type, searchString) {
+            if (type === null) {
+                return input;
+            }
             if (searchString) {
                 return input;
             }

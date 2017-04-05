@@ -8,11 +8,13 @@
 }
 
 #algorithmListWrapper .algorithm {
-    border: 1px solid gray;
+    background-color: var(--peter-river);
+    border: 1px solid var(--peter-river);
     padding: 10px;
     margin-bottom: 10px;
     position: relative;
     width: 100%;
+    font-size: 16px;
 }
 
 .container.ng-enter {
@@ -25,6 +27,12 @@
 
 .container.ng-enter-active {
     opacity:1;
+}
+
+.algorithm-title {
+    font-size: 25pt;
+    font-weight: bold;
+    text-align: inherit;
 }
 
 .algorithm.ng-leave {

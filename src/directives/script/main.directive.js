@@ -28,35 +28,51 @@
             })
     }
 
-    function controller(
-        $location, $log, algorithmFactory, svgTool
-    ) {
+    function controller($location, $log, algorithmFactory, svgTool, $rootScope, types) {
         const vm = this;
 
         vm.nav = {};
         vm.algorithms = algorithmFactory.getAlgorithms();
-        vm.selectedType = 'sorting';
+        vm.selectedType = null;
         vm.isInAlgorithmView = false;
         vm.selectedAlgorithm = {};
         vm.nav.isActive = isActive;
         vm.svgTool = svgTool;
-
+        vm.stopVisualizing = stopVisualizing;
+        vm.logoClicked = logoClicked;
 
         function init() {
             vm.appDetails = {};
             vm.appDetails.title = 'Algorithm Visualization';
             vm.appDetails.tagline = 'Fullos';
+            let actualPath = $location.path().substr(1);
+            for (let key in types) {
+                if (types[key] === actualPath) {
+                    vm.selectedType = actualPath;
+                }
+            }
         }
 
         init();
 
         function isActive(path) {
+            if (vm.selectedType === null) {
+                return false;
+            }
             if (path === $location.path()) {
                 return true;
             }
             return false;
         }
 
+        function stopVisualizing() {
+            $rootScope.$broadcast('algorithmStopped');
+        }
 
+        function logoClicked() {
+            vm.selectedType = null;
+            vm.isInAlgorithmView = false;
+            stopVisualizing();
+        }
     }
 }());

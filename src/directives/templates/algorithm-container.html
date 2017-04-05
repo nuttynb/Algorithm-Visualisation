@@ -12,9 +12,9 @@
                 ng-repeat="algorithm in algorithmContainer.algorithms | algorithmFilterByType : algorithmContainer.type : algorithmContainer.searchString | filter : algorithmContainer.searchString"
                 ng-click="algorithmContainer.showAlgorithm(algorithm);">
                 <div class="clearfix long-text">
-                    <h3>{{::algorithm.name}}</h3>
+                        <span class="algorithm-title">{{::algorithm.name}}</span>
+                        <span class="pull-right">Type: {{::algorithm.type | uppercase}}</span>
                     <ul class="list-unstyled">
-                        <li>Type: {{::algorithm.type | uppercase}}</li>
                         <li>Description: <span ng-bind="algorithm.description"></span></li>
                     </ul>
                 </div>
