@@ -37,10 +37,11 @@ body {
 
 .logo {
     z-index: 150;
-    padding: 45px;
-    margin-right: 10px;
+    padding-left: 30px;
+    padding-top: 45px;
+    padding-bottom: 55px;
     margin-top: 180px;
-    font-size: 5.5em;
+    font-size: 5vw;
     font-family: 'Open Sans';
     color: #f35626;
     background-image: -webkit-linear-gradient(180deg, var(--curious-blue), var(--ebony-clay));
