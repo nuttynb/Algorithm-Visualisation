@@ -1,6 +1,6 @@
 .rectangle {
-    fill: black;
+    fill: var(--ebony-clay);
 }
 .selected-rectangle {
-    fill: red;
+    fill: var(--basic-blue);
 }

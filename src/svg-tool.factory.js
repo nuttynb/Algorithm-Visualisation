@@ -17,12 +17,10 @@
             if (paper === undefined) {
                 svgWidth = width;
                 svgHeight = height;
-                paper = Snap(svgWidth, svgHeight);
+                paper = Snap('#paper');
                 paper.attr({
                     class: 'center-block',
-                    viewBox: `0 0 ${width} ${height}`,
-                    width: '50%',
-                    height: '50%',
+                    viewBox: `0 0 ${width} ${height}`
                 });
             }
             return {
@@ -60,7 +58,7 @@
             let rect = paper.rect(x, y, width, height, 50, 1);
             rect.attr({
                 id: `rect-${counter}`,
-                fill: '#bada55',
+                fill: 'var(--ebony-clay)',
                 stroke: '#000',
                 strokeWidth: 1,
                 transform: 'scale(1,-1)'
@@ -121,7 +119,8 @@
             let textElement = paper.text(x, y, text.toString())
             textElement.attr({
                 id: id.toString(),
-                fill: 'red',
+                fill: 'var(--ebony-clay)',
+                fontWeight: 'bold'
             });
             return textElement;
         }

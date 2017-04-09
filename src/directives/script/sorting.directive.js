@@ -14,10 +14,7 @@
             controller,
             controllerAs: 'sorting',
             restrict: 'E',
-            template: `
-<input-container values="sorting.values"></input-container>
-<button class="btn btn-default" ng-click="sorting.sort()">Sort</button>
-`,
+            template: '<input-container values="sorting.values" show-function="sorting.sort"></input-container><svg id="paper"></svg>',
         };
     }
 

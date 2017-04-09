@@ -8,6 +8,7 @@
             bindToController: true,
             scope: {
                 values: '=',
+                showFunction: '='
             },
             controller,
             controllerAs: 'inputs',
@@ -23,12 +24,15 @@
         vm.startRange = null;
         vm.endRange = null;
 
-        vm.createRandomValues = createRandomValues;
+        vm.createRandomValuesAndShow = createRandomValuesAndShow;
+        $log.info(`randomNum: ${vm.randomNumbers}`);
+        $log.info(`startRange: ${vm.startRange}`);
+        $log.info(`endRange: ${vm.endRange}`);
         function randomize(start, end) {
             return Math.floor((Math.random() * end) + start);
         }
 
-        function createRandomValues() {
+        function createRandomValuesAndShow() {
             vm.values = [];
             if (vm.randomNumbers === null) {
                 return;
@@ -37,6 +41,7 @@
                 vm.values.push(randomize(vm.startRange, vm.endRange));
             }
             $rootScope.$broadcast('valuesChanged');
+            vm.showFunction();
         }
     }
 }());
