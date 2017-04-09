@@ -1,24 +1,38 @@
-<div class="container">
+<div class="algorithm-container" ng-if="algorithmContainer.isRendered();">
+
     <form role="form">
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search everywhere..."
-                   ng-model="algorithmContainer.searchString"
-                   ng-click="algorithmContainer.onTextClick($event);">
-        </div>
+        <input type="text" class="form-control pull-right" placeholder="Search everywhere..."
+               ng-model="algorithmContainer.searchString"
+               ng-click="algorithmContainer.onTextClick($event);">
     </form>
+
     <div id="algorithmListWrapper">
         <ul class="list-unstyled">
-            <li class="algorithm btn btn-default"
-                ng-repeat="algorithm in algorithmContainer.algorithms | algorithmFilterByType : algorithmContainer.type : algorithmContainer.searchString | filter : algorithmContainer.searchString"
-                ng-click="algorithmContainer.showAlgorithm(algorithm);">
-                <div class="clearfix long-text">
-                        <span class="algorithm-title">{{::algorithm.name}}</span>
-                        <span class="pull-right">Type: {{::algorithm.type | uppercase}}</span>
-                    <ul class="list-unstyled">
-                        <li>Description: <span ng-bind="algorithm.description"></span></li>
-                    </ul>
-                </div>
-            </li>
+            <div class="overlay">
+                <li id="{{algorithm.id}}"
+                    class="algorithm"
+                    ng-repeat="algorithm in algorithmContainer.algorithms | algorithmFilterByType : algorithmContainer.type : algorithmContainer.searchString | filter : algorithmContainer.searchString"
+                    ng-click="algorithmContainer.showAlgorithm(algorithm);"
+                    style="background-image: url({{algorithm.imageUrl}}); background-size: 100%; background-position: center;">
+                    <div class="overlay">
+                        <div class="clearfix long-text algorithm-content">
+                            <span class="algorithm-title">{{::algorithm.name}}</span>
+                            <span class="pull-right">Type: {{::algorithm.type | uppercase}}</span>
+                            <ul class="list-unstyled algorithm-desc">
+                                <li><span ng-bind="algorithm.description"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </div>
         </ul>
     </div>
 </div>
+<sorting values="algorithmContainer.values"
+         selected-algorithm="algorithmContainer.selectedAlgorithm"
+         ng-if="algorithmContainer.isRendered('sorting');">
+</sorting>
+<tree values="[2,1,5,4,3,0,30,20]"
+      selected-algorithm="algorithmContainer.selectedAlgorithm"
+      ng-if="algorithmContainer.isRendered('tree');">
+</tree>

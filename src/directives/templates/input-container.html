@@ -1,4 +1,14 @@
+<div class="center-block inputs">
+    <form role="form" class="center-block">
+        <label>Random numbers: </label>
+        <input class="form-control" type="number" ng-model="inputs.randomNumbers" style="width: 200px">
+        <label>Random top range: </label>
+        <input class="form-control" type="number" ng-model="inputs.endRange" style="width: 200px">
+        <label >Random bottom range: </label>
+        <input class="form-control" type="number" ng-model="inputs.startRange" style="width: 200px">
+    </form>
+</div>
+
 <div>
-    <label>Random: </label>
-    <input type="number">
+    <button class="btn btn-default center-block" ng-click="inputs.createRandomValues()">Randomize</button>
 </div>

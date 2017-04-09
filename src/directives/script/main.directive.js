@@ -31,6 +31,7 @@
     function controller($location, $log, algorithmFactory, svgTool, $rootScope, types) {
         const vm = this;
 
+        vm.values = [];
         vm.nav = {};
         vm.algorithms = algorithmFactory.getAlgorithms();
         vm.selectedType = null;
@@ -44,7 +45,6 @@
         function init() {
             vm.appDetails = {};
             vm.appDetails.title = 'Algorithm Visualization';
-            vm.appDetails.tagline = 'Fullos';
             let actualPath = $location.path().substr(1);
             for (let key in types) {
                 if (types[key] === actualPath) {
@@ -66,6 +66,7 @@
         }
 
         function stopVisualizing() {
+            $log.info("Stopping visualization.");
             $rootScope.$broadcast('algorithmStopped');
         }
 
@@ -74,5 +75,17 @@
             vm.isInAlgorithmView = false;
             stopVisualizing();
         }
+
+        $rootScope.$on('$locationChangeStart', (event, next, current) => {
+            let splitUrl = next.split('/');
+            let lastTag = splitUrl[splitUrl.length - 1];
+
+            for (let key in types) {
+                if (types[key] === lastTag) {
+                    vm.selectedType = lastTag;
+                }
+            }
+            $log.info(`Location changed to: /${lastTag}`);
+        });
     }
 }());

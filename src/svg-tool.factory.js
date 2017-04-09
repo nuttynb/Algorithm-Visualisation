@@ -37,8 +37,10 @@
         }
 
         function remove() {
-            $log.info("removing paper...");
-            paper.clear();
+            $log.info("Clearing paper.");
+            if (paper !== undefined) {
+                paper.clear();
+            }
             counter = 0;
         }
 
