@@ -23,11 +23,14 @@
         vm.randomNumbers = null;
         vm.startRange = null;
         vm.endRange = null;
+        vm.numbers = null;
 
         vm.createRandomValuesAndShow = createRandomValuesAndShow;
+        vm.disableOther = disableOther;
         $log.info(`randomNum: ${vm.randomNumbers}`);
         $log.info(`startRange: ${vm.startRange}`);
         $log.info(`endRange: ${vm.endRange}`);
+        $log.info(`numbers: ${vm.numbers}`);
         function randomize(start, end) {
             return Math.floor((Math.random() * end) + start);
         }
@@ -42,6 +45,16 @@
             }
             $rootScope.$broadcast('valuesChanged');
             vm.showFunction();
+        }
+
+        function disableOther() {
+            if ((vm.randomNumbers === null ) || (vm.randomNumbers === 0)) {
+                $log.info("beleptem")
+            }
+            $log.info(`randomNum: ${vm.randomNumbers}`);
+            $log.info(`startRange: ${vm.startRange}`);
+            $log.info(`endRange: ${vm.endRange}`);
+            $log.info(`numbers: ${vm.numbers}`);
         }
     }
 }());

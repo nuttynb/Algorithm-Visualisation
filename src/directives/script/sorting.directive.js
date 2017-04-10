@@ -51,9 +51,9 @@
             }
         }
 
-        //init();
-
-        function sort() {
+        async function sort() {
+            doStop = true;
+            await sleep(5000);
             doStop = false;
             if (vm.selectedAlgorithm.id === 1) {
                 bubbleSort();

@@ -1,15 +1,24 @@
-<div class="center-block inputs">
-    <label>Randomize some numbers, or give a list of numbers separated with comma.</label>
-    <form role="form" class="center-block">
-        <label>Random numbers: </label>
-        <input class="form-control" type="number" ng-model="inputs.randomNumbers" style="width: 200px">
-        <label>Random top range: </label>
-        <input class="form-control" type="number" ng-model="inputs.endRange" style="width: 200px">
-        <label >Random bottom range: </label>
-        <input class="form-control" type="number" ng-model="inputs.startRange" style="width: 200px">
-    </form>
-</div>
-
-<div>
-    <button class="btn btn-default center-block" ng-click="inputs.createRandomValuesAndShow()">Show</button>
+<div class="center-block input-container container-fluid">
+    <div class="row">
+        <label class="tip">Randomize some numbers, or give a list of numbers separated with comma.</label>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 inputs">
+            <form role="form">
+                <label>Random numbers: </label>
+                <input class="form-control" type="number" ng-model="inputs.randomNumbers" style="width: 200px" ng-change="inputs.disableOther();">
+                <label>Random top range: </label>
+                <input class="form-control" type="number" ng-model="inputs.endRange" style="width: 200px">
+                <label>Random bottom range: </label>
+                <input class="form-control" type="number" ng-model="inputs.startRange" style="width: 200px">
+            </form>
+        </div>
+        <div class="col-xs-6 inputs">
+            <label>List of numbers: </label>
+            <input class="form-control" type="text" ng-model="inputs.numbers" style="width: 200px" ng-change="inputs.disableOther();">
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn btn-default center-block" ng-click="inputs.createRandomValuesAndShow()">Show</button>
+    </div>
 </div>
