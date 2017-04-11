@@ -67,6 +67,7 @@
 
         function stopVisualizing() {
             $log.info("Stopping visualization.");
+            vm.values = [];
             $rootScope.$broadcast('algorithmStopped');
         }
 

@@ -6,16 +6,20 @@
         <div class="col-xs-6 inputs">
             <form role="form">
                 <label>Random numbers: </label>
-                <input class="form-control" type="number" ng-model="inputs.randomNumbers" style="width: 200px" ng-change="inputs.disableOther();">
+                <input id="randNum" class="form-control" type="number" ng-model="inputs.randomNumbers"
+                       style="width: 200px" ng-change="inputs.disableNumbersInput();">
                 <label>Random top range: </label>
-                <input class="form-control" type="number" ng-model="inputs.endRange" style="width: 200px">
+                <input id="randStartRange" class="form-control" type="number" ng-model="inputs.endRange"
+                       style="width: 200px" ng-change="inputs.disableNumbersInput();">
                 <label>Random bottom range: </label>
-                <input class="form-control" type="number" ng-model="inputs.startRange" style="width: 200px">
+                <input id="randEndRange" class="form-control" type="number" ng-model="inputs.startRange"
+                       style="width: 200px" ng-change="inputs.disableNumbersInput();">
             </form>
         </div>
         <div class="col-xs-6 inputs">
             <label>List of numbers: </label>
-            <input class="form-control" type="text" ng-model="inputs.numbers" style="width: 200px" ng-change="inputs.disableOther();">
+            <input id="numbersInput" class="form-control" type="text" ng-model="inputs.numbers" style="width: 200px"
+                   ng-change="inputs.disableRandomNumbersInput();">
         </div>
     </div>
     <div class="row">

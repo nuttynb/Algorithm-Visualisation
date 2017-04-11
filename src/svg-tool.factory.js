@@ -39,6 +39,7 @@
             if (paper !== undefined) {
                 paper.clear();
             }
+            paper = undefined;
             counter = 0;
         }
 
@@ -79,8 +80,8 @@
             let circle = paper.circle(x, y, radius);
             circle.attr({
                 id: `circle-${counter}`,
-                fill: '#bada55',
-                stroke: '#000',
+                fill: 'var(--basic-blue)',
+                stroke: 'var(--ebony-clay)',
                 strokeWidth: 5,
             });
             let text = createText(`circle-${counter}-text`, x - 4, y + 4, value);
@@ -93,12 +94,12 @@
             let line = paper.path(`M${from.x},${from.y}L${to.x},${to.y}`);
             line.attr({
                 id: `${id}-line`,
-                stroke: '#000',
+                stroke: 'var(--ebony-clay)',
                 strokeWidth: 3,
                 strokeLinecap: 'round',
                 strokeDasharray: 1000,
                 strokeDashoffset: 1000,
-            })
+            });
 
             return line;
         }
@@ -107,16 +108,16 @@
             let first = {
                 x: firstCircle.attr('cx'),
                 y: Number(firstCircle.attr('cy')) + radius
-            }
+            };
             let second = {
                 x: secondCircle.attr('cx'),
                 y: Number(secondCircle.attr('cy')) - radius
-            }
+            };
             return createLine(firstCircle.attr('id'), first, second);
         }
 
         function createText(id, x, y, text) {
-            let textElement = paper.text(x, y, text.toString())
+            let textElement = paper.text(x, y, text.toString());
             textElement.attr({
                 id: id.toString(),
                 fill: 'var(--ebony-clay)',

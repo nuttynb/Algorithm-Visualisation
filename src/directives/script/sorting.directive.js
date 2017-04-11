@@ -14,7 +14,7 @@
             controller,
             controllerAs: 'sorting',
             restrict: 'E',
-            template: '<input-container values="sorting.values" show-function="sorting.sort"></input-container><svg id="paper"></svg>',
+            template: '<input-container values="sorting.values" show-function="sorting.sort"></input-container><label class="tip center-block">{{sorting.values}}</label><svg id="paper"></svg>'
         };
     }
 
@@ -27,7 +27,7 @@
         vm.rectanglesYPosition = -vm.svgHeight / 2;
 
         vm.sort = sort;
-        let svgCreator;
+        let svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
 
         let doStop = true;
 
@@ -54,6 +54,7 @@
         async function sort() {
             doStop = true;
             await sleep(5000);
+            init();
             doStop = false;
             if (vm.selectedAlgorithm.id === 1) {
                 bubbleSort();
@@ -155,7 +156,6 @@
         $rootScope.$on('valuesChanged', function (event, args) {
             doStop = true;
             svgTool.remove();
-            init();
         });
     }
 }());

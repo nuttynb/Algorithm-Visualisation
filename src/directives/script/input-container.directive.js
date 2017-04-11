@@ -26,7 +26,8 @@
         vm.numbers = null;
 
         vm.createRandomValuesAndShow = createRandomValuesAndShow;
-        vm.disableOther = disableOther;
+        vm.disableNumbersInput = disableNumbersInput;
+        vm.disableRandomNumbersInput = disableRandomNumbersInput;
         $log.info(`randomNum: ${vm.randomNumbers}`);
         $log.info(`startRange: ${vm.startRange}`);
         $log.info(`endRange: ${vm.endRange}`);
@@ -47,14 +48,28 @@
             vm.showFunction();
         }
 
-        function disableOther() {
+        function disableNumbersInput() {
             if ((vm.randomNumbers === null ) || (vm.randomNumbers === 0)) {
-                $log.info("beleptem")
+                if ((vm.startRange === null ) || (vm.startRange === 0)) {
+                    if ((vm.endRange === null ) || (vm.endRange === 0)) {
+                        angular.element(document.getElementById('numbersInput')).removeAttr('disabled');
+                        return;
+                    }
+                }
             }
-            $log.info(`randomNum: ${vm.randomNumbers}`);
-            $log.info(`startRange: ${vm.startRange}`);
-            $log.info(`endRange: ${vm.endRange}`);
-            $log.info(`numbers: ${vm.numbers}`);
+            angular.element(document.getElementById('numbersInput')).attr('disabled', 'true');
+        }
+
+        function disableRandomNumbersInput() {
+            if ((vm.numbers === null ) || (vm.numbers === '') || (vm.numbers === '0')) {
+                angular.element(document.getElementById('randNum')).removeAttr('disabled');
+                angular.element(document.getElementById('randStartRange')).removeAttr('disabled');
+                angular.element(document.getElementById('randEndRange')).removeAttr('disabled');
+                return;
+            }
+            angular.element(document.getElementById('randNum')).attr('disabled', 'true');
+            angular.element(document.getElementById('randStartRange')).attr('disabled', 'true');
+            angular.element(document.getElementById('randEndRange')).attr('disabled', 'true');
         }
     }
 }());

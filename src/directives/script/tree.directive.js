@@ -14,20 +14,17 @@
             controller,
             controllerAs: 'tree',
             restrict: 'E',
-            template: `
-<input-container values="tree.values"></input-container>
-<button class="btn btn-default" ng-click="tree.sort()">Sort</button>
-`,
+            template: '<input-container values="tree.values" show-function="tree.sort"></input-container><label class="tip center-block">{{tree.values}}</label><svg id="paper"></svg>'
         };
     }
 
     function controller($log, $rootScope, svgTool) {
         const vm = this;
-        vm.svgWidth = 800;
-        vm.svgHeight = 800;
+        vm.svgWidth = window.innerWidth * 0.9;
+        vm.svgHeight = window.innerHeight * 0.9;
 
         vm.sort = sort;
-        let svgCreator
+        let svgCreator;
 
         let doStop = true;
 
@@ -95,11 +92,14 @@
                 }
             }
 
-        }
+        };
 
         async function sort() {
+            doStop = true;
+            await sleep(5000);
+            init();
             doStop = false;
-            var bst = new BinarySearchTree();
+            let bst = new BinarySearchTree();
             for (let i = 0; i < vm.values.length; i++) {
                 bst.push(vm.values[i]);
                 await sleep(3000);
@@ -111,6 +111,11 @@
         }
 
         $rootScope.$on('algorithmStopped', function (event, args) {
+            doStop = true;
+            svgTool.remove();
+        });
+
+        $rootScope.$on('valuesChanged', function (event, args) {
             doStop = true;
             svgTool.remove();
         });
