@@ -74,6 +74,11 @@
         function logoClicked() {
             vm.selectedType = null;
             vm.isInAlgorithmView = false;
+            angular.element(document.getElementById('logoContainer')).removeClass('shake')
+            setTimeout(function () {
+                angular.element(document.getElementById('logoContainer')).addClass('shake');
+            }, 10);
+
             stopVisualizing();
         }
 
