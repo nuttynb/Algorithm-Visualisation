@@ -8,7 +8,8 @@
             bindToController: true,
             scope: {
                 values: '=',
-                showFunction: '='
+                showFunction: '=',
+                timer: '='
             },
             controller,
             controllerAs: 'inputs',
@@ -24,25 +25,60 @@
         vm.startRange = null;
         vm.endRange = null;
         vm.numbers = null;
+        vm.slider = {
+            options: {
+                floor: 0,
+                ceil: 1,
+                step: 0.05,
+                precision: 2,
+                enforceStep: false,
+                rightToLeft: true,
+                translate: function (value, sliderId, label) {
+                    switch (label) {
+                        case 'model':
+                            return 'Speed';
+                        case 'ceil':
+                            return 'Slower';
+                        case 'floor':
+                            return 'Faster';
+                    }
+                }
+            }
+        };
+
+        let randomized = false;
 
         vm.createRandomValuesAndShow = createRandomValuesAndShow;
         vm.disableNumbersInput = disableNumbersInput;
         vm.disableRandomNumbersInput = disableRandomNumbersInput;
-        $log.info(`randomNum: ${vm.randomNumbers}`);
-        $log.info(`startRange: ${vm.startRange}`);
-        $log.info(`endRange: ${vm.endRange}`);
-        $log.info(`numbers: ${vm.numbers}`);
+
         function randomize(start, end) {
             return Math.floor((Math.random() * end) + start);
         }
 
+        function parseNumbers() {
+            let numbers = vm.numbers.trim().split(",");
+            let result = [];
+            for (let i = 0; i < numbers.length; i++) {
+                if (Number.isInteger(Number(numbers[i]))) {
+                    result.push(Number(numbers[i]));
+                }
+            }
+            return result;
+        }
+
         function createRandomValuesAndShow() {
             vm.values = [];
-            if (vm.randomNumbers === null) {
+            if (vm.randomNumbers === null && vm.numbers === null) {
                 return;
             }
-            for (let i = 0; i < vm.randomNumbers; i++) {
-                vm.values.push(randomize(vm.startRange, vm.endRange));
+            if (randomized) {
+                for (let i = 0; i < vm.randomNumbers; i++) {
+                    vm.values.push(randomize(vm.startRange, vm.endRange));
+                }
+            } else {
+                vm.values = parseNumbers();
+                $log.info(vm.values);
             }
             $rootScope.$broadcast('valuesChanged');
             vm.showFunction();
@@ -57,6 +93,7 @@
                     }
                 }
             }
+            randomized = true;
             angular.element(document.getElementById('numbersInput')).attr('disabled', 'true');
         }
 
@@ -67,6 +104,7 @@
                 angular.element(document.getElementById('randEndRange')).removeAttr('disabled');
                 return;
             }
+            randomized = false;
             angular.element(document.getElementById('randNum')).attr('disabled', 'true');
             angular.element(document.getElementById('randStartRange')).attr('disabled', 'true');
             angular.element(document.getElementById('randEndRange')).attr('disabled', 'true');

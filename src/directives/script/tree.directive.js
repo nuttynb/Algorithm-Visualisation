@@ -14,7 +14,7 @@
             controller,
             controllerAs: 'tree',
             restrict: 'E',
-            template: '<input-container values="tree.values" show-function="tree.sort"></input-container><label class="tip center-block">{{tree.values}}</label><svg id="paper"></svg>'
+            template: '<input-container values="tree.values" show-function="tree.sort" timer="tree.timer"></input-container><label class="tip center-block">{{tree.values}}</label><svg id="paper"></svg>'
         };
     }
 
@@ -22,6 +22,7 @@
         const vm = this;
         vm.svgWidth = window.innerWidth * 0.9;
         vm.svgHeight = window.innerHeight * 0.9;
+        vm.timer = 0.5;
 
         vm.sort = sort;
         let svgCreator;

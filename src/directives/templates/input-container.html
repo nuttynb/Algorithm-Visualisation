@@ -1,18 +1,18 @@
 <div class="center-block input-container container-fluid">
     <div class="row">
-        <label class="tip">Randomize some numbers, or give a list of numbers separated with comma.</label>
+        <label class="tip">To start visualization randomize some numbers, or give a list of numbers separated with comma.</label>
     </div>
     <div class="row">
         <div class="col-xs-6 inputs">
             <form role="form">
-                <label>Random numbers: </label>
+                <label>Number of random numbers: </label>
                 <input id="randNum" class="form-control" type="number" ng-model="inputs.randomNumbers"
                        style="width: 200px" ng-change="inputs.disableNumbersInput();">
-                <label>Random top range: </label>
-                <input id="randStartRange" class="form-control" type="number" ng-model="inputs.endRange"
-                       style="width: 200px" ng-change="inputs.disableNumbersInput();">
-                <label>Random bottom range: </label>
+                <label>Starting range: </label>
                 <input id="randEndRange" class="form-control" type="number" ng-model="inputs.startRange"
+                       style="width: 200px" ng-change="inputs.disableNumbersInput();">
+                <label>Ending range: </label>
+                <input id="randStartRange" class="form-control" type="number" ng-model="inputs.endRange"
                        style="width: 200px" ng-change="inputs.disableNumbersInput();">
             </form>
         </div>
@@ -21,6 +21,11 @@
             <input id="numbersInput" class="form-control" type="text" ng-model="inputs.numbers" style="width: 200px"
                    ng-change="inputs.disableRandomNumbersInput();">
         </div>
+    </div>
+    <div class="row">
+        <rzslider
+                rz-slider-model="inputs.timer"
+                rz-slider-options="inputs.slider.options"></rzslider>
     </div>
     <div class="row">
         <button class="btn btn-default center-block" ng-click="inputs.createRandomValuesAndShow()">Show</button>

@@ -9,12 +9,12 @@
             bindToController: true,
             scope: {
                 values: '=',
-                selectedAlgorithm: '=',
+                selectedAlgorithm: '='
             },
             controller,
             controllerAs: 'sorting',
             restrict: 'E',
-            template: '<input-container values="sorting.values" show-function="sorting.sort"></input-container><label class="tip center-block">{{sorting.values}}</label><svg id="paper"></svg>'
+            template: '<input-container values="sorting.values" show-function="sorting.sort" timer="sorting.timer"></input-container><label class="tip center-block">{{sorting.values}}</label><svg id="paper"></svg>'
         };
     }
 
@@ -25,6 +25,7 @@
         vm.rectangles = [];
         vm.rectanglesWidth = 50;
         vm.rectanglesYPosition = -vm.svgHeight / 2;
+        vm.timer = 0.5;
 
         vm.sort = sort;
         let svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
@@ -53,7 +54,7 @@
 
         async function sort() {
             doStop = true;
-            await sleep(5000);
+            await sleep(3000);
             init();
             doStop = false;
             if (vm.selectedAlgorithm.id === 1) {
@@ -85,7 +86,7 @@
         }
 
         function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+            return new Promise(resolve => setTimeout(resolve, ms * vm.timer));
         }
 
         async function bubbleSort() {
@@ -113,20 +114,20 @@
         }
 
         async function selectSort() {
-            for (let i = 0; i < vm.rectangles.length; i++) {
+            for (let i = 0; i < vm.rectangles.length - 1; i++) {
                 if (doStop) {
                     break;
                 }
                 svgCreator.applyStyleClass('selected-rectangle', [vm.rectangles[i].id]);
                 let min = i;
-                for (let j = vm.rectangles.length - 1; j > i; j--) {
+                for (let j = i + 1; j < vm.rectangles.length; j++) {
                     if (vm.rectangles[j].value < vm.rectangles[min].value) {
                         min = j;
                         svgCreator.applyStyleClass('selected-rectangle', [vm.rectangles[min].id]);
                         await sleep(2000);
                     }
                 }
-                if (min != i) {
+                if (min !== i) {
                     await sleep(1000);
                     swap(min, i);
                 }
@@ -140,11 +141,11 @@
             let left = vm.rectangles[leftIndex];
             let right = vm.rectangles[rightIndex];
             [left.x, right.x] = [right.x, left.x];
-            vm.rectangles[leftIndex].element.rectangleElement.animate({"x": left.x}, 1000, mina.linear);
-            vm.rectangles[rightIndex].element.rectangleElement.animate({"x": right.x}, 1000, mina.linear);
+            vm.rectangles[leftIndex].element.rectangleElement.animate({'x': left.x}, 1000, mina.linear);
+            vm.rectangles[rightIndex].element.rectangleElement.animate({'x': right.x}, 1000, mina.linear);
             let textX = (vm.rectanglesWidth / 2 - 5);
-            vm.rectangles[leftIndex].element.textElement.animate({"x": left.x + textX}, 1000, mina.linear);
-            vm.rectangles[rightIndex].element.textElement.animate({"x": right.x + textX}, 1000, mina.linear);
+            vm.rectangles[leftIndex].element.textElement.animate({'x': left.x + textX}, 1000, mina.linear);
+            vm.rectangles[rightIndex].element.textElement.animate({'x': right.x + textX}, 1000, mina.linear);
             vm.rectangles[leftIndex] = vm.rectangles.splice(rightIndex, 1, vm.rectangles[leftIndex])[0];
         }
 

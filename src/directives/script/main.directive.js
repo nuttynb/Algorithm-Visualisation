@@ -1,7 +1,7 @@
 (function () {
 
     angular
-        .module('algViz.main', [])
+        .module('algViz.main', [ 'rzModule' ])
         .directive('pageBody', Directive)
         .config(config);
 
