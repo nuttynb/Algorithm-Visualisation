@@ -36,6 +36,18 @@
             vm.rectangles = [];
             svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
 
+            vm.minValue = vm.values[1];
+            vm.maxValue = vm.values[1];
+
+            for (let i = 0; i < vm.values.length; i++) {
+                if (vm.values[i] < vm.minValue) {
+                    vm.minValue = vm.values[i];
+                }
+                if (vm.values[i] > vm.maxValue) {
+                    vm.maxValue = vm.values[i];
+                }
+            }
+
             for (let i = 0; i < vm.values.length; i++) {
                 vm.rectangles.push(
                     {
@@ -68,17 +80,14 @@
             return (vm.svgWidth / (vm.values.length + 1) * (index + 1)) - vm.rectanglesWidth / 2;
         }
 
-        function getRectHeight(randomizedValue) {
-            vm.minRandomNum = 0;
-            vm.maxRandomNum = 10;
-
+        function getRectHeight(value) {
             let newMin = 0;
-            let newMax = 100;
+            let newMax = vm.svgHeight / 2 - 20;
 
-            let randomizedRange = (vm.maxRandomNum - vm.minRandomNum);
+            let randomizedRange = (vm.maxValue - vm.minValue);
 
             let displayedRange = (newMax - newMin);
-            let newValue = (((randomizedValue - vm.minRandomNum) * displayedRange) / randomizedRange) + newMin;
+            let newValue = (((value - vm.minValue) * displayedRange) / randomizedRange) + newMin;
             if (newValue === 0) {
                 newValue = 1;
             }
