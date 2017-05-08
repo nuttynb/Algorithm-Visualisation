@@ -14,7 +14,11 @@
             controller,
             controllerAs: 'sorting',
             restrict: 'E',
-            template: '<input-container values="sorting.values" show-function="sorting.sort" timer="sorting.timer"></input-container><label class="tip center-block">{{sorting.values}}</label><svg id="paper"></svg>'
+            template: `
+<input-container values="sorting.values" show-function="sorting.sort" timer="sorting.timer"></input-container>
+<label class="tip center-block">{{sorting.values}}</label>
+<svg id="paper"></svg>
+`
         };
     }
 
@@ -32,12 +36,12 @@
 
         let doStop = true;
 
-        async function init() {
+        function init() {
             vm.rectangles = [];
             svgCreator = svgTool.createSvg(vm.svgWidth, vm.svgHeight);
 
-            vm.minValue = vm.values[1];
-            vm.maxValue = vm.values[1];
+            vm.minValue = vm.values[0];
+            vm.maxValue = vm.values[0];
 
             for (let i = 0; i < vm.values.length; i++) {
                 if (vm.values[i] < vm.minValue) {

@@ -6,7 +6,7 @@
         .factory('algorithmFactory', algorithmFactory);
 
     function algorithmFactory(types) {
-        const PICTURES_PATH = 'src/directives/pictures/'
+        const PICTURES_PATH = 'src/directives/pictures/';
 
         let algorithms = [
             {
